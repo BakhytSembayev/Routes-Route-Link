@@ -17,14 +17,14 @@ const database = {
   }
 };
 
-const LOADING_TIMEOUT = 3000;
+const LOADING_TIMEOUT = 1000;
 
 const fetchProductList = () => database.productList;
 
 const fetchProduct = (id) => new Promise((resolve) => {
   setTimeout(() => {
     resolve(database.products[id]);
-  }, 2500);
+  }, 300);
 });
 
 const MainPage = () => <div>Контент главной страницы</div>;
@@ -58,7 +58,7 @@ const Product = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (isLoading) {
-        navigate('/product-load-error');
+        navigate('/product-load-error',{replace: true});
       }
     }, LOADING_TIMEOUT);
 
