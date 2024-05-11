@@ -1,6 +1,6 @@
 // App.js
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Outlet, useParams, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Outlet, useParams, useNavigate, Navigate, useRoutes } from 'react-router-dom';
 import style from './App.css';
 
 const database = {
@@ -126,22 +126,27 @@ const App = () => {
             </li>
           </ul>
         </div>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/catalog" element={<Catalog />}>
-            <Route path="product/:id" element={<Product />} />
-          </Route>
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/product-load-error" element={<ProductLoadError />} />
-          <Route path="/product-not-exist" element={<ProductNotFound />} />
-          <Route path="/404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to = "/404" replace ={true}/> } />
-        </Routes>
+        <AppRoutes />
       </div>
     </Router>
   );
 };
 
+const AppRoutes = () => {
+  const routes = useRoutes([
+    {path: '/', element: <MainPage/>},
+    {path: '/catalog', element: <Catalog/>, children: [
+      {path: 'product/:id', element: <Product/>},
+      {path: 'service/:id', element: <Product/>}, // Проверьте, нужен ли этот маршрут
+    ]},
+    {path: '/contacts', element: <Contacts/>},
+    {path: '/product-load-error', element: <ProductLoadError/>},
+    {path: '/product-not-exist', element: <ProductNotFound/>},
+    {path: '/404', element: <NotFound/>},
+    {path: '*', element: <Navigate to="/404" replace={true}/>},
+  ]);
+
+  return routes;
+};
+
 export default App;
-
-
