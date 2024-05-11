@@ -1,6 +1,6 @@
 // App.js
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Outlet, useParams, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Outlet, useParams, useNavigate, Navigate } from 'react-router-dom';
 import style from './App.css';
 
 const database = {
@@ -92,7 +92,7 @@ const Product = () => {
 
 const Contacts = () => <div>Контент контактов</div>;
 
-const NotFound = () => <div>Страница не существует</div>;
+const NotFound = () => <div>Извините, но такая страница не существует</div>;
 
 const ExtendedLink = ({ to, children }) => (
   <NavLink to={to}> 
@@ -133,7 +133,9 @@ const App = () => {
           </Route>
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/product-load-error" element={<ProductLoadError />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/product-not-exist" element={<ProductNotFound />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to = "/404" replace ={true}/> } />
         </Routes>
       </div>
     </Router>
